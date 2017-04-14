@@ -4,7 +4,7 @@ class SearchSimulation:
     if supplied_search is None:
       search = self._search_of_random_type(array_length)
     else:
-      search = supplied_search
+      search = self._search_of_provided_type(array_length, supplied_search)
 
     # location of the target value
     target_location = search.array.index(search.target)
@@ -23,12 +23,12 @@ class SearchSimulation:
 
     return { 'states': states, 'deltas': deltas }
 
-  def observations(self, n, array_length):
+  def observations(self, n, array_length, supplied_search = None):
     states = []
     deltas = []
 
     for i in range(n):
-      observation = self.observation(array_length)
+      observation = self.observation(array_length, supplied_search)
       states += observation['states']
       deltas += observation['deltas']
 
@@ -47,6 +47,14 @@ class SearchSimulation:
       search = LinearSearch(sorted_array, target_int)
 
     return search
+
+  def _search_of_provided_type(self, array_length, supplied_search):
+    sorted_array = self._random_sorted_array(array_length)
+    target_int = random.choice(sorted_array)
+
+    search = supplied_search(sorted_array, target_int)
+    return search
+
 
   def _random_sorted_array(self, length):
     random_values = []
