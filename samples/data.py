@@ -1,6 +1,6 @@
 import pandas as pd
 from sklearn.ensemble import RandomForestRegressor
-
+from PyDexter import PyDexter
 
 # TRAIN A MODEL BASED ON OBSERVED SEARCHES
 ARRAY_SIZE = 100
@@ -49,13 +49,38 @@ binary = simulator.observations(SAMPLE_SIZE, ARRAY_SIZE,
 ai = simulator.observations(SAMPLE_SIZE, ARRAY_SIZE,
   supplied_search = AISearch)
 
-print ("RANDOM: ", len(rand['deltas']) / SAMPLE_SIZE)
-print ("LINEAR: ", len(linear['deltas']) / SAMPLE_SIZE)
-print ("BINARY: ", len(binary['deltas']) / SAMPLE_SIZE)
-print ("AI: ", len(ai['deltas']) / SAMPLE_SIZE)
 
+rand_avg = len(rand['deltas']) / SAMPLE_SIZE
+linear_avg = len(linear['deltas']) / SAMPLE_SIZE
+binary_avg = len(binary['deltas']) / SAMPLE_SIZE
+ai_avg = len(ai['deltas']) / SAMPLE_SIZE
 
-# RANDOM:  97.89
-# LINEAR:  30.61
-# BINARY:  5.73
-# AI:  3.24
+print ("RANDOM: ", rand_avg)
+print ("LINEAR: ", linear_avg)
+print ("BINARY: ", binary_avg)
+print ("AI: ", ai_avg)
+
+pydex = PyDexter()
+pydex.bar({
+  'labels': ["Random", "Linear", "Binary", "Forest"],
+  'groups': [""],
+  'datasets': [
+    {
+      'values': [rand_avg],
+    },
+    {
+      'values': [linear_avg],
+    },
+    {
+      'values': [binary_avg],
+    },
+    {
+      'values': [ai_avg]
+    }
+  ]
+})
+
+# RANDOM:  98.34
+# LINEAR:  31.5
+# BINARY:  5.87
+# AI:  3.32
