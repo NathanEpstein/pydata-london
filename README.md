@@ -304,8 +304,15 @@ model = model.fit(states, deltas)
 class AISearch(Search):
   def update_location(self):
     self.location += model.predict(self.state())[0]
+
+# RANDOM:  98.34, LINEAR:  31.5, BINARY:  5.87, AI:  3.32
 ```
 
+Code can be found at https://github.com/NathanEpstein/pydata-london
 
+--
+
+### Results
+<img src="./img/results.png">
 
 
