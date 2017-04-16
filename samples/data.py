@@ -5,9 +5,10 @@ from PyDexter import PyDexter
 # TRAIN A MODEL BASED ON OBSERVED SEARCHES
 ARRAY_SIZE = 100
 SAMPLE_SIZE = 100
+TRAINING_SIZE = 500
 
 simulator = SearchSimulation()
-training_data = simulator.observations(500, ARRAY_SIZE) #samples, array size
+training_data = simulator.observations(TRAINING_SIZE, ARRAY_SIZE)
 
 states = pd.DataFrame(training_data['states'])
 deltas = pd.DataFrame(training_data['deltas'])
