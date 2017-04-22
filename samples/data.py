@@ -56,11 +56,6 @@ linear_avg = len(linear['deltas']) / SAMPLE_SIZE
 binary_avg = len(binary['deltas']) / SAMPLE_SIZE
 ai_avg = len(ai['deltas']) / SAMPLE_SIZE
 
-print ("RANDOM: ", rand_avg)
-print ("LINEAR: ", linear_avg)
-print ("BINARY: ", binary_avg)
-print ("AI: ", ai_avg)
-
 pydex = PyDexter()
 pydex.bar({
   'labels': ["Random", "Linear", "Binary", "Forest"],

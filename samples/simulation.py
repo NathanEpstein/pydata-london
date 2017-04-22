@@ -26,13 +26,15 @@ class SearchSimulation:
   def observations(self, n, array_length, supplied_search = None):
     states = []
     deltas = []
+    steps = []
 
     for i in range(n):
       observation = self.observation(array_length, supplied_search)
       states += observation['states']
       deltas += observation['deltas']
+      steps.append(len(observation['deltas']))
 
-    return { 'states': states, 'deltas': deltas }
+    return { 'states': states, 'deltas': deltas, 'steps': steps }
 
   def _search_of_random_type(self, array_length):
     sorted_array = self._random_sorted_array(array_length)

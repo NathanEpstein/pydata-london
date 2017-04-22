@@ -315,4 +315,102 @@ Code can be found at https://github.com/NathanEpstein/pydata-london
 ### Results
 <img src="./img/results.png">
 
+--
+
+### Binary vs. Forest
+
+<script src="bower_components/vis/dist/vis-graph3d.min.js"></script>
+
+<style>
+    body {font: 10pt arial;}
+    div#info {
+      width     : 600px;
+      text-align: center;
+      margin-top: 2em;
+      font-size : 1.2em;
+    }
+  </style>
+
+  <script type="text/javascript">
+    const BINARY = [3, 7, 4, 7, 5, 5, 7, 2, 4, 6, 7, 7, 6, 7, 7, 7, 6, 6, 7, 6, 3, 6, 7, 7, 6, 7, 6, 4, 7, 5, 7, 7, 6, 4, 7, 7, 7, 6, 7, 7, 6, 5, 0, 6, 1, 4, 5, 5, 7, 7, 6, 6, 7, 7, 7, 7, 6, 6, 6, 5, 6, 7, 7, 6, 4, 4, 7, 5, 6, 7, 5, 4, 6, 7, 6, 5, 7, 7, 6, 6, 5, 7, 7, 5, 3, 7, 6, 3, 7, 6, 7, 5, 7, 6, 7, 6, 7, 6, 3, 6].sort(function(a, b) { return a - b });
+    const AI = [5, 2, 3, 3, 3, 2, 5, 4, 1, 4, 3, 4, 5, 5, 4, 3, 3, 5, 4, 3, 6, 3, 3, 4, 1, 5, 4, 3, 3, 4, 1, 4, 0, 2, 5, 3, 4, 3, 1, 5, 3, 3, 6, 1, 4, 2, 8, 6, 5, 3, 1, 5, 6, 3, 4, 1, 5, 4, 6, 4, 3, 3, 3, 0, 3, 2, 1, 3, 6, 2, 4, 3, 3, 7, 5, 2, 4, 5, 2, 3, 4, 4, 9, 4, 5, 1, 3, 1, 3, 6, 4, 5, 4, 4, 1, 1, 2, 8, 7, 3].sort(function(a, b) { return a - b });
+
+    var data = null;
+    var graph = null;
+
+    function custom(x, y) {
+      return (-Math.sin(x/Math.PI) * Math.cos(y/Math.PI) * 10 + 10);
+    }
+
+    // Called when the Visualization API is loaded.
+    function drawVisualization() {
+      // Create and populate a data table.
+      data = new vis.DataSet();
+      var searchNames = ['Binary', 'Forest']
+      var searches = [BINARY, AI];
+
+      searches.forEach(function(search, searchIndex) {
+        search.forEach(function(value, valueIndex) {
+          data.add({
+            x: searchIndex,
+            y: valueIndex,
+            z: value,
+            style: searchIndex,
+            extra: searchNames[searchIndex] + ' search ' + valueIndex
+          });
+        });
+      });
+
+      // specify options
+      var options = {
+        width:  '600px',
+        height: '600px',
+        style: 'bar-color',
+        showPerspective: true,
+        showLegend: true,
+        showGrid: true,
+        showShadow: false,
+
+        // Option tooltip can be true, false, or a function returning a string with HTML contents
+        tooltip: function (point) {
+          // parameter point contains properties x, y, z, and data
+          // data is the original object passed to the point constructor
+          return 'value: <b>' + point.z + '</b><br>' + point.data.extra;
+        },
+
+        // Tooltip default styling can be overridden
+        tooltipStyle: {
+          content: {
+            background    : 'rgba(255, 255, 255, 0.7)',
+            padding       : '10px',
+            borderRadius  : '10px'
+          },
+          line: {
+            borderLeft    : '1px dotted rgba(0, 0, 0, 0.5)'
+          },
+          dot: {
+            border        : '5px solid rgba(0, 0, 0, 0.5)'
+          }
+        },
+
+        keepAspectRatio: false,
+        verticalRatio: 0.5
+      };
+
+      var camera = graph ? graph.getCameraPosition() : null;
+
+      // create our graph
+      var container = document.getElementById('mygraph');
+      graph = new vis.Graph3d(container, data, options);
+
+      if (camera) graph.setCameraPosition(camera); // restore camera position
+
+    }
+  </script>
+
+</head>
+
+<body onload="drawVisualization()">
+<div id="mygraph"></div>
+
 
