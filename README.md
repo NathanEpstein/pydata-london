@@ -27,7 +27,7 @@ author:
 ### Decision Trees
 
 - Decision trees branch on each of the included features in order to partition the data.
-- For each bin in the partition (i.e. leaf of the tree), we assign an output value to inputs contained in that bin.
+- For each bin in the partition (i.e., leaf of the tree), we assign an output value to inputs contained in that bin.
 
 --
 
@@ -46,7 +46,7 @@ author:
 
 ### Regression Trees
 
-- The leaves of the tree still form a partition of the output space but there are many possible values within each bin.
+- The leaves of the tree still form a partition of the output space, but there are many possible values within each bin.
 - How do we assign a single value? We take the mean among values assigned to that bin.
 
 --
@@ -73,21 +73,20 @@ author:
 
 ### "Guess Who?"
 
-<table><tr>
-  <td>
-    An intuitive way to understand this challenge is the game “Guess Who?”.
-  </td>
-  <td>
-    <img src="./img/GuessWho0.jpg">
-  </td>
-</tr></table>
+- An intuitive way to understand this challenge is the game “Guess Who?”.
 
+--
+
+### "Guess Who?"
+
+- In "Guess Who?" players try to identify the opposing player's character from a pre-set list.
+- Individuals take turns asking yes or no questions to expose features about the character.
 
 --
 
 ### Low Information Gain
 
-- It’s typical to ask questions like whether the character “wears glasses” or “has white hair”.
+- It’s typical to ask questions like whether the character “wears glasses” or “has white hair.”
 - These questions represent features with low information gain.
 - More likely than not, the answer will be no and we will have eliminated only a few possibilities.
 
@@ -95,18 +94,8 @@ author:
 
  ### High Information Gain
 
- <table><tr>
-  <td>
-    <ul>
-      <li>
-        A higher information gain feature will partition the data as evenly as possible.
-      </li>
-    </ul>
-  </td>
-  <td>
-    <img src="./img/GuessWho1.jpg">
-  </td>
-</tr></table>
+- A higher information gain feature will partition the data as evenly as possible.
+- What if we just list half of the available characters and ask if the opponent's character is in that set?
 
 --
 
@@ -121,7 +110,7 @@ author:
 ### Forests from Trees
 
 - Overfitting is a well-known pitfall for decision trees.
-- For example, if we add an additional 1000 characters onto the board, asking about the 12 characters from before is a bad question and will almost certainly underperform “white hair”.
+- For example, if we add an additional 1000 characters onto the board, asking about the 12 characters from before is a bad question and will almost certainly underperform “white hair.”
 
 --
 
@@ -142,8 +131,8 @@ author:
 ### Parameter Tuning
 
 - Obviously, these parameters can be tuned to fit the needs of the application.
-- A model with more trees / data can take longer to train but may have greater accuracy.
-- More depth / features increases the likelihood of overfitting but may be appropriate if features have complex interactions.
+- A model with more trees / data can take longer to train, but may have greater accuracy.
+- More depth / features increases the likelihood of overfitting, but may be appropriate if features have complex interactions.
 
 --
 
@@ -158,13 +147,13 @@ author:
 ### Avoiding Overfitting
 
 - It’s difficult to overfit with only a subset of the available information.
-- By building the random forest model as an aggregation of weaker models (weak in that the trees are trained on a subset of the available information) we are able to build a strongly predictive model while avoiding the pitfalls of overfitting.
+- By building the random forest model as an aggregation of weaker models (weak in that the trees are trained on a subset of the available information), we are able to build a strongly predictive model while avoiding the pitfalls of overfitting.
 
 --
 
 ### Strong Suits
 
-- What makes random forests such an effective tool is their robustness to different types of data (e.g. non-linear / non-monotonic functions, un-scaled data, data with missing values, data with poorly chosen features).
+- What makes random forests such an effective tool is their robustness to different types of data (e.g., non-linear / non-monotonic functions, un-scaled data, data with missing values, data with poorly chosen features).
 - This makes them an excellent “out of the box” tool for general machine learning problems which do not immediately suggest themselves to a specific alternative.
 
 --
@@ -172,7 +161,7 @@ author:
 ### Non-linear Functions
 
 - Consider a function like y = x⋅sin(x) + U, where U is a random value uniformly distributed in the interval (0, 1).
-- It’s a “simple” function but it is both non-monotonic and non-linear.
+- It’s a “simple” function, but it is both non-monotonic and non-linear.
 - A technique like simple regression is a non-starter without significant feature extraction. However, it is a simple task for a random forest.
 
 --
@@ -204,7 +193,7 @@ model = model.fit(X, Y)
 ### Unscaled Features
 
 - Consider the following example. We will seek to classify points as being within four quadrants: “NE” (x > 0 and y > 0), “NW” (x < 0 and y > 0), “SE” (x > 0 and y < 0), and “SW” (x < 0 and y < 0).
-- A straightforward example, except that our x values will cover the interval (-0.1, 1) while our y values will cover the interval (-5000, 5000).
+- A straightforward example, except that our x values will cover the interval (-0.1, 1), while our y values will cover the interval (-5000, 5000).
 
 --
 
@@ -247,7 +236,7 @@ In a time when neural networks are as popular as they are, it’s tempting to as
 
 ### Why not Neural Nets?
 
-Parameter tuning tends to be simpler; there are well established conventions for choosing parameters in random forests but how to determine network layer structure is fairly opaque.
+Parameter tuning tends to be simpler; there are well established conventions for choosing parameters in random forests, but how to determine network layer structure is fairly opaque.
 --
 
 ### Why not Neural Nets?
@@ -258,7 +247,7 @@ There is a more robust body of academic literature around them which makes the i
 
 ### Why not Neural Nets?
 
-Generally simpler to implement. Popular implementations (e.g. scikit-learn) allow users to train sensible random forests with as little as a single line of code. Configuring network layer architecture generally involves more set up.
+Generally simpler to implement. Popular implementations (e.g., scikit-learn) allow users to train sensible random forests with as little as a single line of code. Configuring network layer architecture generally involves more set up.
 
 --
 
