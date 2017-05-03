@@ -60,15 +60,14 @@ author:
 
 - It’s clear that the order of branches in a decision tree matters.
 - Less transparent is how the path to each leaf is constructed.
-- This happens according to an iterative approach called entropy minimization.
+- This happens according to an iterative approach called entropy minimization (greedy algorithm, branch on highest information gain feature at each step).
 
 --
 
 ### Tree Order
 
 - Unless you're familiar with information theory, the intuition behind entropy minimization may not be obvious.
-- Our problem is the following: given a set of features, how do we partition the output space with a minimum depth tree?
-
+- Our problem is the following: given a set of features, how do we partition the output space as finely as possible, as quickly as possible?
 --
 
 ### "Guess Who?"
@@ -95,7 +94,7 @@ author:
  ### High Information Gain
 
 - A higher information gain feature will partition the data as evenly as possible.
-- What if we just list half of the available characters and ask if the opponent's character is in that set?
+- What if we just list half of the available characters and ask if the opponent's character is in that set (i.e., "is your character Bob, or Ted, or Jen, or ... ?").
 
 --
 
@@ -104,6 +103,10 @@ author:
 - Membership in one-half of the characters is a feature which perfectly bisects the data
 - We are guaranteed to eliminate exactly half of the possibilities.
 - In the general case (of n characters), we can identify the target character with only log_2(n) operations.
+
+--
+
+# Making a Forest from Trees
 
 --
 
@@ -116,12 +119,19 @@ author:
 
 ### Forests from Trees
 
-- This is the purpose of random forests.
+- Overcoming this pitfall is the purpose of random forests.
 - To avoid overfitting with a single tree, we build an ensemble model through a procedure called bagging.
 
 --
 
-### Forests from Trees
+### Ensemble Models
+
+- An ensemble model is a one made by combining other models.
+- The average of many unbiased predictors with high variance is an unbiased predictor with low(er) variance.
+
+--
+
+### Bagging Procedure
 
 - For some number of trees, T, and predetermined depth, D, select a random subset of the data (convention is roughly 2/3 with replacement).
 - Train a decision tree on that data using a subset of the available features (roughly sqrt(M) by convention, where M is the total number of features).
@@ -158,6 +168,10 @@ author:
 
 --
 
+# Examples
+
+--
+
 ### Non-linear Functions
 
 - Consider a function like y = x⋅sin(x) + U, where U is a random value uniformly distributed in the interval (0, 1).
@@ -165,6 +179,8 @@ author:
 - A technique like simple regression is a non-starter without significant feature extraction. However, it is a simple task for a random forest.
 
 --
+
+### Non-linear Functions
 
 ```python
 from sklearn.ensemble import RandomForestRegressor
@@ -197,6 +213,8 @@ model = model.fit(X, Y)
 
 --
 
+### Unscaled Features
+
 ```python
 import numpy as np
 from sklearn.ensemble import RandomForestClassifier
@@ -224,7 +242,15 @@ model = model.fit(xy_coords, quadrant)
 
 --
 
+# K-Nearest Neighbors...
+
+--
+
 <img src="./img/knn_classifier.png">
+
+--
+
+# Forests vs. Neural Nets
 
 --
 
@@ -236,7 +262,7 @@ In a time when neural networks are as popular as they are, it’s tempting to as
 
 ### Why not Neural Nets?
 
-Parameter tuning tends to be simpler; there are well established conventions for choosing parameters in random forests, but how to determine network layer structure is fairly opaque.
+Parameter tuning tends to be simpler with forests; there are well established conventions for choosing parameters in random forests, but how to determine network layer structure is fairly opaque.
 --
 
 ### Why not Neural Nets?
@@ -257,7 +283,7 @@ Random forests are inherently parallelizable and extremely well supported for di
 
 --
 
-# An Example AI
+# AI with Random Forests
 
 --
 
@@ -294,7 +320,6 @@ class AISearch(Search):
   def update_location(self):
     self.location += model.predict(self.state())[0]
 
-# RANDOM:  98.34, LINEAR:  31.5, BINARY:  5.87, AI:  3.32
 ```
 
 Code can be found at https://github.com/NathanEpstein/pydata-london
@@ -303,6 +328,8 @@ Code can be found at https://github.com/NathanEpstein/pydata-london
 
 ### Results
 <img src="./img/results.png">
+
+random: 98.34, linear: 31.5, binary: 5.87, AI: 3.32
 
 --
 
